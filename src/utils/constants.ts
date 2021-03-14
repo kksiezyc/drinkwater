@@ -14,4 +14,4 @@ export const availableDailyDose = [
 
 export const notificationsChannelId = 'default-channel-id';
 
-export const notificationHours: number[] = [8, 10, 12, 14, 16, 18, 20, 22]
+export const notificationHours: number[] = [8, 10, 12, 14, 16, 18, 20, 22];
