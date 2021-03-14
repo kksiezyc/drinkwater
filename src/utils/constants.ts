@@ -10,6 +10,7 @@ export const availableDailyDose = [
   {label: '2L', value: 2000},
   {label: '2.5L', value: 2500},
   {label: '3L', value: 3000},
+  {label: '3.5L', value: 3500},
 ];
 
 export const notificationsChannelId = 'default-channel-id';

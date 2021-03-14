@@ -6,6 +6,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {Login} from './src/components/login';
 import {LoadingOverlay} from './src/components/loading-overlay';
 import {LocalNotifications} from './src/services/notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,6 +25,7 @@ const App = (): ReactElement => {
         LocalNotifications.getInstance().registerToLocalNotifications();
       } else {
         LocalNotifications.getInstance().unregisterToLocalNotifications();
+        AsyncStorage.clear();
       }
       setUser(userState);
       if (initializing) {

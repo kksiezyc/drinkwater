@@ -45,7 +45,7 @@ export class LocalNotifications {
       const now = new Date().getHours();
       notificationHours.forEach((hour: number) => {
         const date = new Date();
-        if (now > hour) {
+        if (now >= hour) {
           date.setDate(date.getDate() + 1);
         }
         date.setHours(hour);
