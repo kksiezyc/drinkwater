@@ -1,3 +1,4 @@
+import auth from '@react-native-firebase/auth';
 import React, {useCallback, useState} from 'react';
 import {ReactElement} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
@@ -47,6 +48,10 @@ export const Main = (): ReactElement => {
     setDailyWater(0);
   }, []);
 
+  const logout = useCallback(() => {
+    auth().signOut();
+  }, []);
+
   return (
     <>
       <Text>select daily target</Text>
@@ -70,6 +75,7 @@ export const Main = (): ReactElement => {
         </View>
       </View>
       <Button onPress={restart} title={'restart'} />
+      <Button onPress={logout} title={'logout'} />
     </>
   );
 };
