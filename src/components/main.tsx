@@ -1,9 +1,19 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ReactElement} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import {availableDailyDose} from '../utils/constants';
+import {DrinkWaterValues} from '../utils/enums';
+import {LoadingOverlay} from './loading-overlay';
 import {ProgressBar} from './progress-bar';
 import {SliderWithValue} from './slider';
 
@@ -31,6 +41,7 @@ export const Main = (): ReactElement => {
   const [sliderValue, setSliderValue] = useState<number>(250);
   const [dailyWater, setDailyWater] = useState<number>(0);
   const [dailyDose, setDailyDose] = useState<number>(2000);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onSliderValueChange = useCallback((value: number) => {
     setSliderValue(value);
@@ -52,8 +63,34 @@ export const Main = (): ReactElement => {
     auth().signOut();
   }, []);
 
+  useEffect(() => {
+    AsyncStorage.getItem(DrinkWaterValues.DailyWater).then((value) => {
+      if (value) {
+        setDailyWater(Number(value));
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    const saveStateToPersistentStorage = async (state: AppStateStatus) => {
+      if (state === 'background') {
+        await AsyncStorage.setItem(
+          DrinkWaterValues.DailyWater,
+          dailyWater.toString(),
+        );
+      }
+    };
+    AppState.addEventListener('change', saveStateToPersistentStorage);
+
+    return () => {
+      AppState.removeEventListener('change', saveStateToPersistentStorage);
+    };
+  }, [dailyWater]);
+
   return (
     <>
+      <LoadingOverlay visible={loading} />
       <Text>select daily target</Text>
       <RNPickerSelect
         value={dailyDose}

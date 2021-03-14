@@ -5,6 +5,7 @@ import {Main} from './src/components/main';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {Login} from './src/components/login';
 import {LoadingOverlay} from './src/components/loading-overlay';
+import {LocalNotifications} from './src/services/notifications';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +20,11 @@ const App = (): ReactElement => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged((userState) => {
+      if (userState) {
+        LocalNotifications.getInstance().registerToLocalNotifications();
+      } else {
+        LocalNotifications.getInstance().unregisterToLocalNotifications();
+      }
       setUser(userState);
       if (initializing) {
         setInitializing(false);
