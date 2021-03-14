@@ -25,7 +25,7 @@ export const SliderWithValue = ({
   style,
 }: SliderProps): ReactElement => (
   <View style={[styles.sliderContainer, style]}>
-    <Text>{value}</Text>
+    <Text>{`${value} ML`}</Text>
     <Slider
       style={styles.slider}
       minimumValue={0}

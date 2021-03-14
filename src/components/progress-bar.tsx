@@ -60,7 +60,7 @@ export const ProgressBar = ({
         style={{...styles.progressBar, transform: [{translateX: translateX}]}}
       />
       <View style={styles.textWrapper}>
-        <Text style={styles.text}>{`${value} / ${dailyDose}`}</Text>
+        <Text style={styles.text}>{`${value} / ${dailyDose} ML`}</Text>
         {value >= dailyDose && (
           <Text style={styles.text}>Daily dose completed</Text>
         )}
